@@ -1,0 +1,28 @@
+{
+  "name": "minasvisual/widgets",
+  "description": "Simple Widget System for Laravel Framework",
+  "keywords": [
+    "widgets",
+    "laravel",
+    "minasvisual"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Minas visual",
+      "email": "contato@minasvisual.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.0",
+    "illuminate/support": "5.1.*",
+    "illuminate/container": "5.1.*",
+    "illuminate/view": "5.1.*",
+    "illuminate/routing": "5.1.*"
+  },
+  "require-dev": {
+    "mockery/mockery": "~0.9",
+    "phpunit/phpunit": "~4"
+  },
+  "minimum-stability": "dev"
+}
