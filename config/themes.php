@@ -2,7 +2,7 @@
 
 return [
 
-    'frontend' => 'default.layout',
+    'frontend' => 'exemplo.index',
     'backend' => 'exemplo.index',
 
     'path' => base_path('resources/themes'),

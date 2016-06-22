@@ -9,9 +9,16 @@ use Modules\Petition\Entities\Petition;
 use Modules\Petition\Entities\Category;
 use Modules\Petition\Entities\Signature;
 use Input,Validator,Auth,Mail,View;
+use Yajra\Datatables\Datatables;
 
 class PetitionController extends Controller
 {
+    protected $petition;
+    public function __construct(Petition $petition)
+    {
+        $this->petition = $petition;
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -20,11 +27,24 @@ class PetitionController extends Controller
     public function index()
     {
         //
-        $petitions = Petition::where( 'user_id', Auth::user()->id )->orderBy('id', 'desc')->get();
+        $petitions = $this->petition->where( 'user_id', Auth::user()->id )->orderBy('id', 'desc')->get();
       
-        $sign_petitions = Signature::where( 'user_id', Auth::user()->id )->with('petition')->get();
-      
+        $sign_petitions = Signature::where( 'user_id', Auth::user()->id )->with('petition')->get(); 
+
         return View('petition::petition.manage', compact('petitions', 'sign_petitions') );
+    }
+
+    public function grid()
+    {
+            $users = Petition::join('users', 'petition_petition.user_id', '=', 'users.id')
+                        ->select(['petition_petition.id','users.name','petition_petition.title','petition_petition.declaration']);
+
+             return Datatables::of( $users )
+                ->addColumn('action', function ($user) {
+                    return '<a href="'.url('petition/'.$user->id.'/edit').'" data-toggle="modal" data-target="#myModal">Edit </a>
+                            <a href="petition/'.$user->id.'" data-toggle="modal" data-target="#deleteModal"  >Delete </a>';
+                })
+                ->make();
     }
 	
     public function petitionByCategory($id)

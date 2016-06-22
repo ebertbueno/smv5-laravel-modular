@@ -5,8 +5,8 @@ namespace Modules\Admin\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Account;
-use App\User;
+use Modules\Admin\Entities\Account;
+use Modules\Admin\Entities\User;
 use Auth, Validator, Input, Hash;
 use Yajra\Datatables\Datatables;
 

@@ -25,6 +25,17 @@ class AdminServiceProvider extends ServiceProvider {
 		$this->registerViews();
  		// Using Closure based composers...
        
+        //
+		// CREATING THE MENU
+		//
+		$menu = Menu::instance('backend');
+		$menu->route('admin.users.index', trans('admin::profile.account'), 5 );
+
+		/*view()->composer('admin::index', function ($view) 
+        {
+        	$view->widgets[] = view('petition::widget');
+        	$view->with('widgets', $view->widgets );
+        }); */
 	}
 
 	/**

@@ -48,6 +48,7 @@ Route::group(['prefix' => 'petition', 'namespace' => 'Modules\Petition\Http\Cont
 	// logged acitons
 	Route::group(['middleware' => 'auth'], function() 
 	{	
+		Route::get('/grid', 'PetitionController@grid');
 		Route::get('/create', 'PetitionController@create');
 		Route::get('/{id}', 'PetitionController@show');
 		Route::get('/{id}/edit', 'PetitionController@edit');

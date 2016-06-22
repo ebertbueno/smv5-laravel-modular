@@ -63,7 +63,7 @@
 
         <nav class="nav nav-default navbar-fixed-bottom rodape">
             <div class="container">
-                <div class="span2">@yield('foooter')</div>
+                <div class="span2">@yield('footer')</div>
                 <div class="autor"></div>
             </div>
         </nav>

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Request, Input, Validator;
-use App\User;
+use Module\Admin\Entities\User;
 
 class PasswordController extends Controller
 {

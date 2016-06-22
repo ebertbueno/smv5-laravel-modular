@@ -5,8 +5,11 @@
 	    <table id="users-table" class="display table" cellspacing="0" width="100%">
 	        <thead>
 	            <tr>
-	                <th>Name</th>
-	                <th>Cat</th>
+	                <th> </th>
+	                <th> </th>
+	                <th> </th>
+	                <th> </th>
+	                <th> </th>
 	            </tr>
 	        </thead>
 	    </table>
@@ -28,7 +31,14 @@
 	 	$('#users-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{{ asset('admin/user') }}'
+            ajax: '{{ asset('petition/grid') }}',
+             columns: [
+	            {data: 0, name: 'petition_petition.id'},
+	            {data: 1, name: 'users.name'},
+	            {data: 2, name: 'petition_petition.title'},
+	            {data: 3, name: 'petition_petition.declaration'},
+	            {data: 4, searchable:false }
+	        ]
         });
 	} );
 @endsection
