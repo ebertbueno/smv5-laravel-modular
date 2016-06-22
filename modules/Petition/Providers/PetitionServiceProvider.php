@@ -2,6 +2,7 @@
 
 use Illuminate\Support\ServiceProvider;
 use Config, Menu, Request, View, Blade;
+use App\Libraries\Api;
 
 class PetitionServiceProvider extends ServiceProvider {
 
@@ -29,12 +30,14 @@ class PetitionServiceProvider extends ServiceProvider {
 		$menu = Menu::instance('backend');
 		$menu->url('/petition', trans('petition::petitions.petitions'), 5 );
 
-		view()->composer('admin::index', function ($view) 
+		/*view()->composer('admin::index', function ($view) 
         {
         	$view->widgets[] = view('petition::widget');
         	$view->with('widgets', $view->widgets );
-        }); 
+        }); */
 		
+		$api = new Api();
+		$api->setWidget('widgets', 'admin::index', 'petition::widget');
 
 	}
 
