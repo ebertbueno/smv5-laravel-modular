@@ -158,7 +158,8 @@ return [
         LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider::class,
         LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class,
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
-        Barryvdh\Cors\ServiceProvider::class
+        Barryvdh\Cors\ServiceProvider::class,
+        Fenos\Notifynder\NotifynderServiceProvider::class,
     ],
 
     /*
@@ -220,6 +221,7 @@ return [
         'Permission'=> Pingpong\Trusty\Permission::class,
         'BootForm'  => AdamWathan\BootForms\Facades\BootForm::class,
         'Authorizer' => LucaDegasperi\OAuth2Server\Facades\Authorizer::class,
+        'Notifynder' => Fenos\Notifynder\Facades\Notifynder::class, //https://github.com/fenos/Notifynder
     ],
 
 ];

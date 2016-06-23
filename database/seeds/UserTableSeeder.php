@@ -14,13 +14,12 @@ class UserTableSeeder extends Seeder
         //
          DB::table('users')->insert([
             'name' => 'Admin',
-            'last_name' => str_random(10),
+            'last_name' => 'nistrador',
             'email' => 'admin@admin.com',
             'password' => bcrypt('admin'),
             'language' => 'en',
-            'is_staff' => 1,
-            'is_active' => 1,
-            'is_superuser' => 1
+            'status' => 1,
+            'level' => 1
         ]);
     }
 }

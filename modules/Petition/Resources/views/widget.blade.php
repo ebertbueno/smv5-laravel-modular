@@ -33,11 +33,11 @@
             serverSide: true,
             ajax: '{{ asset('petition/grid') }}',
              columns: [
-	            {data: 0, name: 'petition_petition.id'},
-	            {data: 1, name: 'users.name'},
-	            {data: 2, name: 'petition_petition.title'},
-	            {data: 3, name: 'petition_petition.declaration'},
-	            {data: 4, searchable:false }
+	            {data: 'id', name: 'petition_petition.id'},
+	            {data: 'users.name', name: 'users.name'},
+	            {data: 'title', name: 'petition_petition.title'},
+	            {data: 'declaration', name: 'petition_petition.declaration'},
+	            {data: 'action', searchable:false }
 	        ]
         });
 	} );

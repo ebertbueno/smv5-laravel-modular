@@ -3,3 +3,4 @@ https://sky.pingpong-labs.com/docs/2.1/modules
 https://github.com/adamwathan/bootforms
 https://github.com/yajra/laravel-datatables
 https://github.com/lucadegasperi/oauth2-server-laravel
+https://github.com/fenos/Notifynder

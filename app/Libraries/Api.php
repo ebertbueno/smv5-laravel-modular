@@ -2,6 +2,8 @@
 
 namespace App\Libraries;
 
+use DB, BootForm;
+
 class Api{
 	
 	public function __construct() 
@@ -18,5 +20,19 @@ class Api{
         	$view->widgets[] = view($view);
         	$view->with( $name, $view->widgets );
         });
+    }
+
+    public function getForm( $table, $add=[], $filter=[] )
+    {
+        $out = [];
+        $sm = DB::connection()->getDoctrineSchemaManager();
+        $fields = $sm->listTableColumns('users');
+        foreach($fields as $key=>$fd)
+        {
+            $out[$key] = [
+                'field' => BootForm::text($key, $key)
+            ];
+        }
+        return $out;
     }
 }

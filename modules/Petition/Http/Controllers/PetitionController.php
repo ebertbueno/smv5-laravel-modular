@@ -36,15 +36,16 @@ class PetitionController extends Controller
 
     public function grid()
     {
-            $users = Petition::join('users', 'petition_petition.user_id', '=', 'users.id')
-                        ->select(['petition_petition.id','users.name','petition_petition.title','petition_petition.declaration']);
-
+            //$users = Petition::join('users', 'petition_petition.user_id', '=', 'users.id')
+            //            ->select(['petition_petition.id','users.name','petition_petition.title','petition_petition.declaration']);
+            $users = $this->petition->with('user')->select('petition_petition.*')->get();
+            DD($users);
              return Datatables::of( $users )
                 ->addColumn('action', function ($user) {
                     return '<a href="'.url('petition/'.$user->id.'/edit').'" data-toggle="modal" data-target="#myModal">Edit </a>
                             <a href="petition/'.$user->id.'" data-toggle="modal" data-target="#deleteModal"  >Delete </a>';
                 })
-                ->make();
+                ->make(true);
     }
 	
     public function petitionByCategory($id)

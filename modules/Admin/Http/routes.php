@@ -10,7 +10,7 @@ Route::group(['prefix' => '/', 'namespace' => 'Modules\Admin\Http\Controllers'],
 	Route::post('contact', 'HomeController@sendContact');
 });
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Modules\Admin\Http\Controllers'], function()
+Route::group(['prefix' => 'admin', 'namespace' => 'Modules\Admin\Http\Controllers', 'middleware'=>'auth'], function()
 {
 	Route::get('/', 'AdminController@index');
     Route::post('password/{id}', 'UserController@updatePass')->name('admin.user.updatePass');

@@ -14,5 +14,13 @@
 				{!! $widget !!}
 			@endforeach
 	</section>
+	<?php 
+			/*$sm = DB::connection()->getDoctrineSchemaManager();
+			$fields = $sm->listTableColumns('users');
+			foreach ($fields as $field) 
+			{
+			    print_r($field);
+			}*/
+	 ?>
 @stop
 
