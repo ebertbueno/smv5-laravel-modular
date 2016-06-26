@@ -17,7 +17,7 @@
         "yajra/laravel-datatables-oracle":"6.*",
         "lucadegasperi/oauth2-server-laravel": "5.0.*",
         "prettus/l5-repository": "^2.5",
-        "barryvdh/laravel-cors": "0.7.x",
+        "barryvdh/laravel-cors": "^0.8.0",
         "fenos/notifynder": "3.2"
     },
     "require-dev": {
