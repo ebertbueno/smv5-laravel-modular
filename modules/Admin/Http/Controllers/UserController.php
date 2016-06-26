@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Modules\Admin\Entities\Account;
-use Modules\Admin\Entities\User;
+use Modules\Admin\Repositories\UserRepository;
 use Auth, Validator, Input, Hash;
 use Yajra\Datatables\Datatables;
 
@@ -14,7 +14,7 @@ class UserController extends Controller
 {
     protected $user;
 
-    public function __construct(User $user)
+    public function __construct(UserRepository $user)
     {
         $this->user = $user;
     }
@@ -28,7 +28,7 @@ class UserController extends Controller
         //
         if ($request->ajax())
         {
-            $users = $this->user->select(['id','name','email','level','language','status']);
+            $users = $this->user->all(['id','name','email','level','language','status']);
 
              return Datatables::of( $users )
                 ->addColumn('action', function ($user) {

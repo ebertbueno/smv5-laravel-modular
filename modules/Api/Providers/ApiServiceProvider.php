@@ -1,10 +1,8 @@
-<?php namespace Modules\Admin\Providers;
-
+<?php namespace Modules\Api\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Menu, App;
 
-class AdminServiceProvider extends ServiceProvider {
+class ApiServiceProvider extends ServiceProvider {
 
 	/**
 	 * Indicates if loading of the provider is deferred.
@@ -23,19 +21,6 @@ class AdminServiceProvider extends ServiceProvider {
 		$this->registerTranslations();
 		$this->registerConfig();
 		$this->registerViews();
- 		// Using Closure based composers...
-       
-        //
-		// CREATING THE MENU
-		//
-		$menu = Menu::instance('backend');
-		$menu->route('admin.users.index', trans('admin::profile.account'), 5 );
-
-		/*view()->composer('admin::index', function ($view) 
-        {
-        	$view->widgets[] = view('petition::widget');
-        	$view->with('widgets', $view->widgets );
-        }); */
 	}
 
 	/**
@@ -46,10 +31,6 @@ class AdminServiceProvider extends ServiceProvider {
 	public function register()
 	{		
 		//
-		$this->app->bind(
-			'Modules\Admin\Repositories\UserRepository',
-			'Modules\Admin\Repositories\UserRepositoryEloquent'
-		);
 	}
 
 	/**
@@ -60,10 +41,10 @@ class AdminServiceProvider extends ServiceProvider {
 	protected function registerConfig()
 	{
 		$this->publishes([
-		    __DIR__.'/../Config/config.php' => config_path('admin.php'),
+		    __DIR__.'/../Config/config.php' => config_path('api.php'),
 		]);
 		$this->mergeConfigFrom(
-		    __DIR__.'/../Config/config.php', 'admin'
+		    __DIR__.'/../Config/config.php', 'api'
 		);
 	}
 
@@ -74,7 +55,7 @@ class AdminServiceProvider extends ServiceProvider {
 	 */
 	public function registerViews()
 	{
-		$viewPath = base_path('resources/views/modules/admin');
+		$viewPath = base_path('resources/views/modules/api');
 
 		$sourcePath = __DIR__.'/../Resources/views';
 
@@ -83,8 +64,8 @@ class AdminServiceProvider extends ServiceProvider {
 		]);
 
 		$this->loadViewsFrom(array_merge(array_map(function ($path) {
-			return $path . '/modules/admin';
-		}, \Config::get('view.paths')), [$sourcePath]), 'admin');
+			return $path . '/modules/api';
+		}, \Config::get('view.paths')), [$sourcePath]), 'api');
 	}
 
 	/**
@@ -94,12 +75,12 @@ class AdminServiceProvider extends ServiceProvider {
 	 */
 	public function registerTranslations()
 	{
-		$langPath = base_path('resources/lang/modules/admin');
+		$langPath = base_path('resources/lang/modules/api');
 
 		if (is_dir($langPath)) {
-			$this->loadTranslationsFrom($langPath, 'admin');
+			$this->loadTranslationsFrom($langPath, 'api');
 		} else {
-			$this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'admin');
+			$this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'api');
 		}
 	}
 

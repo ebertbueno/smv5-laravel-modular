@@ -13,6 +13,10 @@ Route::group(['prefix' => '/', 'namespace' => 'Modules\Admin\Http\Controllers'],
 Route::group(['prefix' => 'admin', 'namespace' => 'Modules\Admin\Http\Controllers', 'middleware'=>'auth'], function()
 {
 	Route::get('/', 'AdminController@index');
+ 	Route::get('/test', function(){
+ 		$repository = app()->make('Modules\Admin\Repositories\UserRepository');
+ 		return $repository->all();
+ 	});
     Route::post('password/{id}', 'UserController@updatePass')->name('admin.user.updatePass');
 
     Route::post('users/{id}/password', 'UserController@updatePass')->name('admin.user.updatePass');
@@ -20,3 +24,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Modules\Admin\Http\Controller
 	
 });
 
+Route::group(['prefix'=>'api/admin', 'namespace'=>'Modules\Admin\Http\Controllers', 'middleware'=>'oauth'], function()
+{
+	Route::get('/user', function(){
+		return App\User::all();
+	});
+});
