@@ -24,9 +24,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Modules\Admin\Http\Controller
 	
 });
 
-Route::group(['prefix'=>'api/admin', 'namespace'=>'Modules\Admin\Http\Controllers', 'middleware'=>'oauth'], function()
+Route::group(['prefix'=>'api', 'namespace'=>'Modules\Admin\Http\Controllers', 'middleware'=>['oauth','cors']], function()
 {
 	Route::get('/user', function(){
-		return App\User::all();
+		$id = \LucaDegasperi\OAuth2Server\Facades\Authorizer::getResourceOwnerId();
+		return App\User::select(['id','name','last_name','email'])->find($id);
 	});
 });
