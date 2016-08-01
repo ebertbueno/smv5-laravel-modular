@@ -15,7 +15,6 @@ class Accounts extends Migration
         Schema::create('accounts', function (Blueprint $table) 
         {
             $table->integer('user_id')->unsigned()->index();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('avatar');
             $table->string('provider');
             $table->string('provider_id');
