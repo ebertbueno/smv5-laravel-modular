@@ -6,3 +6,4 @@ https://github.com/lucadegasperi/oauth2-server-laravel
 https://github.com/fenos/Notifynder
 https://github.com/andersao/l5-repository
 https://github.com/barryvdh/laravel-cors
+https://github.com/pusher/pusher-http-php
