@@ -32,8 +32,8 @@ class UserController extends Controller
 
              return Datatables::of( $users )
                 ->addColumn('action', function ($user) {
-                    return '<a href="'.url('admin/users/'.$user->id.'/edit').'" data-toggle="modal" data-target="#myModal">Edit </a>
-                            <a href="admin/users/'.$user->id.'" data-toggle="modal" data-target="#deleteModal"  >Delete </a>';
+                    return '<button ng-click="toggle(\'edit\', '.$user->id.')" >Edit </button>
+                            <button ng-click="confirmDelete('.$user->id.')" >Delete </button>';
                 })
                 ->make();
         }
@@ -101,6 +101,9 @@ class UserController extends Controller
     public function edit($id)
     {
          $user = $this->user->find( $id );
+         if ($request->ajax())
+             return response()->json($user, 200);
+
 		 return view('admin::user.form', compact('user'));
     }
 

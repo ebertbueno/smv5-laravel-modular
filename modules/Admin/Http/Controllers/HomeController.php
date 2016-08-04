@@ -22,12 +22,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // novas petições
-        $featured = Petition::orderBy('id', 'desc')->take(10)->get();
-        $petitions = Petition::has('signature','>' , 1000)->take(10)->get();
-        $categories = Category::lists('name', 'id');
-        //
-        return View('site.index', compact('petitions', 'featured', 'categories'));
+        return View('admin::frontend.welcome');
     }
 
     /**
@@ -36,16 +31,11 @@ class HomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function search($id)
+    public function search($key)
     {
         //
-        $petitions = Petition::with('category')
-                        ->where('title', 'like' , '%'.$id.'%' )
-                        ->orWhere('tags', 'like', '%'.$id.'%')
-                        ->orWhere('declaration', 'like', '% '.$id.' %')
-                        ->get();
-      
-        return View('site.search', compact('petitions'));
+        
+        return View('admin::frontend.search', ['search'=>$key] );
     
     }
 

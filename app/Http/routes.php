@@ -14,7 +14,7 @@
 Route::get('/modules/{module}/{type}/{file}', [ function ($module, $type, $file) 
 {
     $module = ucfirst($module);
-    $path = base_path("Modules/$module/Assets/Blocks/$type/$file");
+    $path = base_path("Modules/$module/Assets/$type/$file");
     if (\File::exists($path)) {
         return response()->download($path, "$file");
     }

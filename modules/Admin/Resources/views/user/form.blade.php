@@ -2,10 +2,12 @@
 <!-- ================ -->
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	<h3>Gerenciar Usuários</h3>
+	<h3>Gerenciar Usuários </h3>
 </div>
-<div class="modal-body">
-	<div class="row">
+<div class="modal-body" ng-app="app">
+	<div class="row" ng-controller="UserController">
+		@{{ model }}
+
 		@if( Request::is('admin/users/create') )
 				{!! Form::model($user, array('route' => 'admin.users.store', 'method' => 'post', 'class'=>'form-horizontal','id'=>'formAjax' )) !!}
 		@else

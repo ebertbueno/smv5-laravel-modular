@@ -13,7 +13,7 @@ class AdminController extends Controller {
 	{
 		
 
-		return view('admin::index')->with('widgets', [] )->with('sidebars', []);
+		return view('admin::dashboard.index')->with('widgets', [] )->with('sidebars', []);
 	}
 	
 

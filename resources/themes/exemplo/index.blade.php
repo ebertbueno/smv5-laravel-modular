@@ -20,7 +20,7 @@
         @yield('css')
         
 
-    <body>
+    <body ng-app="app">
         <!--  SIDEBAR TOPO ESQUERDO -->
         <nav class="navbar navbar-default navbar-fixed-top menu" role="navigation" >
             <div class="container">

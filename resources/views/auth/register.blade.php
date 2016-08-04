@@ -10,40 +10,40 @@
 						<!-- ================ -->
 						<div class="main object-non-visible" data-animation-effect="fadeInDownSmall" data-effect-delay="300">
 							<div class="form-block center-block">
-								<h2 class="title">{{ trans('layout.sign_up') }}</h2>
+								<h2 class="title">{{ trans('admin::layout.sign_up') }}</h2>
 								<hr>
 								<!-- main-container end -->
 								{!! Form::open(array('url' => 'auth/register', 'class'=>'form-horizontal', 'method'=>'post')) !!}
 									<div class="form-group has-feedback">
-										<label for="inputName" class="col-sm-3 control-label">{{ trans('layout.firstname') }}<span class="text-danger small">*</span></label>
+										<label for="inputName" class="col-sm-3 control-label">{{ trans('admin::layout.firstname') }}<span class="text-danger small">*</span></label>
 										<div class="col-sm-8">
 											{!! Form::text('name', null, ['class'=>'form-control'] ) !!}
 											<i class="fa fa-pencil form-control-feedback"></i>
 										</div>
 									</div>
 									<div class="form-group has-feedback">
-										<label for="inputLastName" class="col-sm-3 control-label">{{ trans('layout.lastname') }}<span class="text-danger small">*</span></label>
+										<label for="inputLastName" class="col-sm-3 control-label">{{ trans('admin::layout.lastname') }}<span class="text-danger small">*</span></label>
 										<div class="col-sm-8">
 											{!! Form::text('last_name', null, ['class'=>'form-control'] ) !!}
 											<i class="fa fa-pencil form-control-feedback"></i>
 										</div>
 									</div>
 									<div class="form-group has-feedback">
-										<label for="inputEmail" class="col-sm-3 control-label">{{ trans('layout.email') }} ({{ trans('layout.username') }})<span class="text-danger small">*</span></label>
+										<label for="inputEmail" class="col-sm-3 control-label">{{ trans('admin::layout.email') }} ({{ trans('admin::layout.username') }})<span class="text-danger small">*</span></label>
 										<div class="col-sm-8">
 											{!! Form::text('email', null, ['class'=>'form-control']) !!}
 											<i class="fa fa-envelope form-control-feedback"></i>
 										</div>
 									</div>
 									<div class="form-group has-feedback">
-										<label for="inputPassword" class="col-sm-3 control-label">{{ trans('layout.password') }}<span class="text-danger small">*</span></label>
+										<label for="inputPassword" class="col-sm-3 control-label">{{ trans('admin::layout.password') }}<span class="text-danger small">*</span></label>
 										<div class="col-sm-8">
 											{!! Form::password('password', ['class'=>'form-control']) !!}
 											<i class="fa fa-lock form-control-feedback"></i>
 										</div>
 									</div>
 									<div class="form-group has-feedback">
-										<label for="inputPassword" class="col-sm-3 control-label">{{ trans('layout.confirmation') }} {{ trans('layout.password') }}<span class="text-danger small">*</span></label>
+										<label for="inputPassword" class="col-sm-3 control-label">{{ trans('admin::layout.confirmation') }} {{ trans('admin::layout.password') }}<span class="text-danger small">*</span></label>
 										<div class="col-sm-8">
 											{!! Form::password('password_confirmation', ['class'=>'form-control']) !!}
 											<i class="fa fa-lock form-control-feedback"></i>
@@ -53,14 +53,14 @@
 										<div class="col-sm-offset-3 col-sm-8">
 											<div class="checkbox">
 												<label>
-													<input type="checkbox" required>{{ trans('layout.accept') }} <a href="#">{{ trans('layout.police_terms') }}</a> {{ trans('layout.and') }} <a href="#">{{ trans('layout.police_private') }}</a>
+													<input type="checkbox" required>{{ trans('admin::layout.accept') }} <a href="#">{{ trans('admin::layout.police_terms') }}</a> {{ trans('admin::layout.and') }} <a href="#">{{ trans('admin::layout.police_private') }}</a>
 												</label>
 											</div>
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="col-sm-offset-3 col-sm-8">
-											<button type="submit" class="btn btn-default">{{ trans('layout.sign_up') }}</button>
+											<button type="submit" class="btn btn-default">{{ trans('admin::layout.sign_up') }}</button>
 										</div>
 									</div>
 								{!! Form::close() !!}

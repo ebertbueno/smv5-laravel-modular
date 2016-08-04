@@ -8,7 +8,7 @@
 				<div class="container">
 					<div class="row">
 
-						<h3 class="text-center">{{ trans('auth.sendreset.title') }}</h3>
+						<h3 class="text-center">{{ trans('admin::auth.sendreset.title') }}</h3>
 						<!-- resources/views/auth/password.blade.php -->
 						<form method="POST" action="/password/email" class="form-horizontal col-md-6 col-md-offset-3">
 								{!! csrf_field() !!}
@@ -22,13 +22,13 @@
 								@endif
 
 								<div class="form-group">
-										{{ trans('layout.email') }}
+										{{ trans('admin::layout.email') }}
 										<input type="email" name="email" value="{{ old('email') }}"  class="form-control">
 								</div>
 
 								<div class="form-group">
 										<button type="submit" class="btn btn-success">
-												{{ trans('profile.sendreset') }}
+												{{ trans('admin::profile.sendreset') }}
 										</button>
 								</div>
 						</form>

@@ -6,7 +6,7 @@ Route::group(['prefix' => '/', 'namespace' => 'Modules\Admin\Http\Controllers'],
 	Route::get('/', 'HomeController@index');
 	Route::get('search/{id}', 'HomeController@search');
 	
-	Route::get('contact', function(){ return View('site.contact'); });
+	Route::get('contact', function(){ return View('admin::frontend.contact'); });
 	Route::post('contact', 'HomeController@sendContact');
 });
 
@@ -19,6 +19,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Modules\Admin\Http\Controller
  	});
     Route::post('password/{id}', 'UserController@updatePass')->name('admin.user.updatePass');
 
+    Route::get('grid', 'UserController@grid');
     Route::post('users/{id}/password', 'UserController@updatePass')->name('admin.user.updatePass');
 	Route::resource('users', 'UserController' );
 	
