@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-    <head>
+    <head >
         <meta charset="utf-8" />
         <title>@yield('title')</title> 
 
@@ -20,7 +20,7 @@
         @yield('css')
         
 
-    <body ng-app="app">
+    <body ng-app="app"  ng-controller='PageController'>
         <!--  SIDEBAR TOPO ESQUERDO -->
         <nav class="navbar navbar-default navbar-fixed-top menu" role="navigation" >
             <div class="container">

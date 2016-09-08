@@ -24,7 +24,6 @@ class PetitionServiceProvider extends ServiceProvider {
 		$this->registerConfig();
 		$this->registerViews();
 
-		
 		//
 		// CREATING THE MENU
 		//
@@ -32,10 +31,11 @@ class PetitionServiceProvider extends ServiceProvider {
 		$menu->url('/petition', trans('petition::petitions.petitions'), 5 );
 
 		view()->composer('admin::index', function ($view) 
-		{
-			$view->widgets[] = view('petition::widget');
-			$view->with('widgets', $view->widgets );
-		}); 
+        {
+        	$view->widgets[] = view('petition::widget');
+        	$view->with('widgets', $view->widgets );
+        }); 
+		
 
 	}
 
@@ -46,7 +46,7 @@ class PetitionServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{		
-		
+		//
 	}
 
 	/**
@@ -107,7 +107,6 @@ class PetitionServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		
 		return array();
 	}
 

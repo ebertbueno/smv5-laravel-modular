@@ -12,11 +12,13 @@ use Yajra\Datatables\Datatables;
 
 class UserController extends Controller
 {
-    protected $user;
+    protected $user, $levels, $langs;
 
     public function __construct(UserRepository $user)
     {
         $this->user = $user;
+				$this->levels = [1=>'Admin', 2=>'Visitor'];
+				$this->langs = ['en'=>'English', 'pt'=>'Português'];
     }
     /**
      * Display a listing of the resource.
@@ -26,29 +28,30 @@ class UserController extends Controller
     public function index(Request $request)
     {
         //
+				$levels = $this->levels;
+				$langs = $this->langs;
+			
         if ($request->ajax())
         {
-            $users = $this->user->all(['id','name','email','level','language','status']);
+            $users = $this->user->all(['id','name','last_name','email','level','language','status']);
 
              return Datatables::of( $users )
+							  ->editColumn('level', function($user) use ($levels){
+										return  $levels[ $user->level ];
+								})
+							 	->editColumn('language', function($user) use ($langs){
+										return  $langs[$user->language];
+								})
+							 	->editColumn('status', function($user){
+										return  ( $user->status == 1 ? trans('admin::layout.active'):trans('admin::layout.deactive') );
+								})
                 ->addColumn('action', function ($user) {
-                    return '<button ng-click="toggle(\'edit\', '.$user->id.')" >Edit </button>
-                            <button ng-click="confirmDelete('.$user->id.')" >Delete </button>';
+                    return '<button class="btn btn-link" ng-click="toggle(\'edit\', '.$user->id.')">Edit</button>
+                            <button class="btn btn-link" ng-click="delete('.$user->id.')" > Delete</button>';
                 })
                 ->make();
         }
         return View('admin::user.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-        return View('admin::user.form', ['user'=> $this->user]);
     }
 
     /**
@@ -62,19 +65,24 @@ class UserController extends Controller
         //
         $all = $request->all();
 
-        $valid = Validator::make( $all, $this->user->rules );
+        $valid = Validator::make( $all, [     
+                'name' => 'required|max:255',
+                'email' => 'required|email|max:255|unique:users',
+                'password' => 'required|confirmed|min:6',
+	 			]);
 
         if( $valid->passes() )
         {
+						$all['password'] = Hash::make($all['password']);
             $this->user->create($all);
 
-            return response()->json(['message' => 'success'], 200);
+            return response()->json(['message' => trans('admin::layout.alert_success')], 200);
         }
 
-        if ($request->ajax())
-            return response()->json( ['message'=>'error','error'=>$valid->getMessageBag()->toArray()], 412 );
+        if ( $request->ajax() )
+            return response()->json( ['message'=>trans('admin::layout.alert_error'),'error'=>$valid->getMessageBag()->toArray()], 412 );
 
-        return redirect()->route('admin.users.index')->withMessage('Error')->withErrors($valid);
+        return redirect()->route('admin.users.index')->withMessage(trans('admin::layout.alert_error'))->withErrors($valid);
 
     }
 
@@ -87,24 +95,9 @@ class UserController extends Controller
     public function show($id)
     {
         //
-		$user = $this->user->find($id);
+				$user = $this->user->find($id);
 			
-        return View('admin::user.profile', compact('user'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-         $user = $this->user->find( $id );
-         if ($request->ajax())
-             return response()->json($user, 200);
-
-		 return view('admin::user.form', compact('user'));
+        return response()->json( $user );
     }
 
     /**
@@ -117,37 +110,38 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         //
-		$input = $request->except(['_method', '_token']);
-		
-			
-		$validation = Validator::make($input,  [
-            'name' => 'required',
-            'password' => 'confirmed'
-    	]);
+				$input = $request->except(['_method', '_token']);
 
-		if( $validation->passes() )
-		{
-                unset( $input['password_confirmation'] );
 
-                if( empty($input['password']) ) 
-                    unset($input['password']);
-                else
-                    $input['password'] = Hash::make($input['password']);
+				$validation = Validator::make($input,  [
+								'name' => 'required',
+                'email' => 'required|email|max:255|unique:users,email,'.$id,
+								'password' => 'confirmed'
+					]);
 
-				$this->user->where('id', $id)->update( $input );
-				
-                if ($request->ajax())
-                    return response()->json( ['message'=>'Success']);
+				if( $validation->passes() )
+				{
+						unset( $input['password_confirmation'] );
 
-				return redirect('admin/user/'.$id);  
-		}
+						if( empty($input['password']) ) 
+								unset($input['password']);
+						else
+								$input['password'] = Hash::make($input['password']);
+
+						$this->user->update( $input, $id );
+
+						if ($request->ajax())
+								return response()->json( ['message'=>trans('admin::layout.alert_success')]);
+
+						return redirect('admin/user/'.$id);  
+				}
 
         if ($request->ajax())
-                return response()->json( ['message'=>'Error','error'=>$validation->getMessageBag()->toArray()], 412 );
+                return response()->json( ['message'=>trans('admin::layout.alert_error'),'error'=>$validation->getMessageBag()->toArray()], 412 );
 
-		return redirect()->route('admin.user.show', $id)
-				->withInput()
-				->withErrors($validation);
+				return redirect()->route('admin.user.show', $id)
+						->withInput()
+						->withErrors($validation);
 				
     }
 
@@ -158,15 +152,21 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $this->user->destroy($id);
+        $rs = $this->user->delete($id);
+				if( $rs ){ 
+					$message = trans('admin::layout.alert_success'); $cod = 200;
+				}
+				else{
+					$message = trans('admin::layout.alert_error'); $cod = 412;
+				}
+			
+        if ($request->ajax())
+		        return response()->json(['message'=>$message ], $cod); 
+    
+				return redirect()->route('admin.user.index')->withMessage(['message'=>$message]);
 
-        if (Request::ajax())
-            return response()->json( ['message'=>'Success']);
-
-        return response()->json(['message'=>trans('layout.alert_success'), 'avatar'=>asset('uploads/'.$fileName) ], 200); 
-                    
     }
 	
 		

@@ -52,6 +52,8 @@ return [
     'my' => 'Minhas',
     'yes' => 'Sim',
     'no' => 'Não',
+    'active' => 'Ativo',
+    'deactive' => 'Inativo',
   
     'alert_success' => 'Salvo com sucesso',
     'alert_error' => 'Ocorreu um erro, tente novamente!',

@@ -14,7 +14,7 @@
 Route::get('/modules/{module}/{type}/{file}', [ function ($module, $type, $file) 
 {
     $module = ucfirst($module);
-    $path = base_path("Modules/$module/Assets/$type/$file");
+    $path = base_path("modules/$module/Assets/$type/$file");
     if (\File::exists($path)) {
         return response()->download($path, "$file");
     }
@@ -54,8 +54,9 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 Route::get('/migrate', function()
 {
     $exitCode = Artisan::call('config:clear', []);
-    $exitCode = Artisan::call('migrate:refresh', []);
-    $exitCode = Artisan::call('db:seed', []);
+    $exitCode = Artisan::call('module:migrate-reset', []);
+    $exitCode = Artisan::call('module:migrate', []);
+    $exitCode = Artisan::call('module:seed', []);
 
     return 'ok';
 });

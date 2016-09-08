@@ -56,7 +56,10 @@ System.prototype.parseForm = function( selector='#formAjax', divStatus='.status'
 System.prototype.datatables = function( div, url, method='GET', param = {} )
 {
     param['processing'] = true; 
-    param['serverSide'] = true;
+    param['serverSide'] = true; 
+    param['fnCreatedCell'] = function (nTd, sData, oData, iRow, iCol){  
+         $compile(nTd)($scope);
+    };
     param['ajax'] = {url:url,method:method};
     this.objDT = $( div ).DataTable(param);
 

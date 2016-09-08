@@ -3971,18 +3971,6 @@
         },
         {
             "name": "yajra/laravel-datatables-oracle",
-<<<<<<< HEAD
-            "version": "v6.13.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/yajra/laravel-datatables.git",
-                "reference": "b4a58ea33dc6a550fb82baa2cd54e9288b3ddc80"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/b4a58ea33dc6a550fb82baa2cd54e9288b3ddc80",
-                "reference": "b4a58ea33dc6a550fb82baa2cd54e9288b3ddc80",
-=======
             "version": "v6.14.0",
             "source": {
                 "type": "git",
@@ -3993,7 +3981,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/96cfd6ad57144c16d15aef407e27c484931a2ea5",
                 "reference": "96cfd6ad57144c16d15aef407e27c484931a2ea5",
->>>>>>> 65ffec8346c23dd686a76fd5ee2ac1b9042b8ec6
                 "shasum": ""
             },
             "require": {
@@ -4037,11 +4024,7 @@
                 "laravel4",
                 "laravel5"
             ],
-<<<<<<< HEAD
-            "time": "2016-06-25 08:13:11"
-=======
             "time": "2016-07-01 09:12:56"
->>>>>>> 65ffec8346c23dd686a76fd5ee2ac1b9042b8ec6
         }
     ],
     "packages-dev": [
@@ -5322,18 +5305,6 @@
         },
         {
             "name": "symfony/yaml",
-<<<<<<< HEAD
-            "version": "v3.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/yaml.git",
-                "reference": "c5a7e7fc273c758b92b85dcb9c46149ccda89623"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/c5a7e7fc273c758b92b85dcb9c46149ccda89623",
-                "reference": "c5a7e7fc273c758b92b85dcb9c46149ccda89623",
-=======
             "version": "v3.1.2",
             "source": {
                 "type": "git",
@@ -5344,7 +5315,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/yaml/zipball/2884c26ce4c1d61aebf423a8b912950fe7c764de",
                 "reference": "2884c26ce4c1d61aebf423a8b912950fe7c764de",
->>>>>>> 65ffec8346c23dd686a76fd5ee2ac1b9042b8ec6
                 "shasum": ""
             },
             "require": {
@@ -5380,11 +5350,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-<<<<<<< HEAD
-            "time": "2016-06-14 11:18:07"
-=======
             "time": "2016-06-29 05:41:56"
->>>>>>> 65ffec8346c23dd686a76fd5ee2ac1b9042b8ec6
         },
         {
             "name": "webmozart/assert",

@@ -10,12 +10,13 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Pingpong\Trusty\Traits\TrustyTrait;
 
 class User extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
                                     CanResetPasswordContract
 {
-    use Authenticatable, Authorizable, CanResetPassword, \Stevebauman\EloquentTable\TableTrait, SoftDeletes;
+    use Authenticatable, Authorizable, CanResetPassword, \Stevebauman\EloquentTable\TableTrait, SoftDeletes, TrustyTrait;
 
     /**
      * The database table used by the model.

@@ -1,113 +1,108 @@
-var app = angular.module('app', ['datatables'])
-        
-.constant('API_URL', 'http://localhost:8000/admin/');
+angular.module('app', ['datatables'])
 
-app.controller('UserController', function($scope, $http, API_URL, DTOptionsBuilder, DTColumnBuilder) 
-{
-    //retrieve employees listing from API
-   var vm = this;
-    vm.dtOptions = DTOptionsBuilder.newOptions()
-        .withOption('ajax', {
-         // Either you specify the AjaxDataProp here
-         // dataSrc: 'data',
-         url: API_URL+'users',
-         type: 'GET'
-     })
-     // or here
-     .withDataProp('data')
-        .withOption('processing', true)
-        .withOption('serverSide', true)
-        .withPaginationType('full_numbers');
+  .constant('API_URL', $('base').attr('href') )
 
-       vm.dtColumns = [
-            DTColumnBuilder.newColumn('0'),
-            DTColumnBuilder.newColumn('1'),
-            DTColumnBuilder.newColumn('2'),
-            DTColumnBuilder.newColumn('3'),
-            DTColumnBuilder.newColumn('4'),
-            DTColumnBuilder.newColumn('5'),
-            DTColumnBuilder.newColumn('6')
-       ];
+  .config(['$httpProvider', function($httpProvider) {
+      $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+  }])
+  
+  .controller('PageController', function($scope, $http, DTOptionsBuilder, DTColumnBuilder, $compile, API_URL) 
+	{
+			var form = {level:"1", language:"en", status:"1"};
+			$scope.form = form;
+			$scope.levels = [ {id:"1", name:"Admin"},{id:"2",name:"Visitor"} ];
+			$scope.allstatus = [ {id:"1", name:"Ativo"},{id:"0",name:"Inativo"} ];
+			$scope.languages = [ {id:"en", name:"English"},{id:"pt",name:"Português"} ];
 
-    $scope.model = "teste angular";
-    
-    //show modal form
-    $scope.toggle = function(modalstate, id) {
-        $scope.modalstate = modalstate;
+			$scope.dtColumns = [
+						DTColumnBuilder.newColumn('0').withTitle('ID'),
+						DTColumnBuilder.newColumn('1').withTitle('First name'),
+						DTColumnBuilder.newColumn('2').withTitle('Last name'),
+						DTColumnBuilder.newColumn('3').withTitle('Email'),
+						DTColumnBuilder.newColumn('4').withTitle('Level'),
+						DTColumnBuilder.newColumn('5').withTitle('Language'),
+						DTColumnBuilder.newColumn('6').withTitle('Status'),
+						DTColumnBuilder.newColumn(7).withTitle(''),
+				];
 
-        switch (modalstate) {
-            case 'add':
-                $scope.form_title = "Add New Employee";
-                break;
-            case 'edit':
-                $scope.form_title = "Employee Detail";
-                $scope.id = id;
-                $http.get(API_URL + 'admin/users/' + id + '/edit')
-                        .success(function(response) {
-                            console.log(response);
-                            $scope.employee = response;
-                        });
-                break;
-            default:
-                break;
-        }
-        console.log(id);
-        $('#formModal').modal('show');
-    }
+			$scope.dtInstance = {};
 
-    //save new record / update existing record
-    $scope.save = function(modalstate, id) {
-        var url = API_URL + "employees";
-        
-        //append employee id to the URL if the form is in edit mode
-        if (modalstate === 'edit'){
-            url += "/" + id;
-        }
-        
-        $http({
-            method: 'POST',
-            url: url,
-            data: $.param($scope.employee),
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).success(function(response) {
-            console.log(response);
-            location.reload();
-        }).error(function(response) {
-            console.log(response);
-            alert('This is embarassing. An error has occured. Please check the log for details');
-        });
-    }
+			$scope.dtOptions = DTOptionsBuilder.newOptions()
+						.withOption('ajax', {
+						 url: API_URL + '/admin/users',
+						 type: 'GET'
+				})
+				.withDataProp('data')
+				.withOption('processing', true)
+				.withOption('serverSide', true)
+				.withOption('createdRow', function(row) {
+					$compile(angular.element(row).contents())($scope);
+				});		
+				
+				$scope.reload = function (){
+						$scope.dtInstance.reloadData();
+				}
 
-    //delete record
-    $scope.confirmDelete = function(id) {
-        var isConfirmDelete = confirm('Are you sure you want this record?');
-        if (isConfirmDelete) {
-            $http({
-                method: 'DELETE',
-                url: API_URL + 'employees/' + id
-            }).
-                    success(function(data) {
-                        console.log(data);
-                        location.reload();
-                    }).
-                    error(function(data) {
-                        console.log(data);
-                        alert('Unable to delete');
-                    });
-        } else {
-            return false;
-        }
-    }
-});
+			//show modal form
+			$scope.toggle = function(modalstate, id) 
+			{
+					$scope.modalstate = modalstate;
+				  $scope.form.id = id;
+					delete $scope.error;delete $scope.status;
+					$scope.form = angular.copy(form);
 
-function Admin() {
-    var nome;
+					if(modalstate == 'edit')
+					{
+							$http.get( API_URL+'/admin/users/' + id)
+													.success(function(response) {
+																console.log($scope.form);
+															  $scope.form = response;
+													});
+					}
+					$('#myModal').modal('show');
+			}
 
-    this.getNome = function () {
-        return nome;
-    };
+			$scope.save = function(modalstate, id, token) {
+					var url = API_URL + "/admin/users";
+					$scope.form._token = token;
+					$scope.form._method = "POST";
 
-    this.setNome = function (value) {
-        nome = value;
-    };
-}
+					//append employee id to the URL if the form is in edit mode
+					if (modalstate === 'edit'){
+							url += "/" +id;
+							$scope.form._method = "PATCH";
+					}
+
+					$http({
+							method: 'POST',
+							url: url,
+							data: $.param($scope.form),
+							headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+					}).success(function(response) 
+					{
+							$scope.status = {type:'success', 'message':response.message};
+							$("#myModal").modal('hide');
+  					  $scope.reload();
+					}).error(function(response) 
+					{
+							$scope.status = {type:'error', 'message':response.message};
+							$scope.error = response.error;
+					});
+			}
+
+			$scope.delete = function( id ){
+					if( confirm('Are you sure?') )
+					{
+							$http({
+								method:'DELETE',
+								url: API_URL + '/admin/users/'+ id
+							}).success(function(response){
+								$scope.status = {type:'success', 'message':response.message};
+								$scope.reload();
+							}).error(function(response){
+								alert(response.message);
+							});
+					}
+			}
+	
+	});
