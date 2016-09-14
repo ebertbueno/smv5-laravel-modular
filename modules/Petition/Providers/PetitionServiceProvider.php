@@ -27,9 +27,20 @@ class PetitionServiceProvider extends ServiceProvider {
 		//
 		// CREATING THE MENU
 		//
-		$menu = Menu::instance('backend');
-		$menu->url('/petition', trans('petition::petitions.petitions'), 5 );
+		$menu = Menu::instance('menu-left');
+		
+		$menu->dropdown( trans('petition::petition.petitions'), function ($sub) {
+            $sub->url('petition/create', trans('petition.create_petition') );
+            $sub->url('petition', trans('petition.manage_petition') );
+        }, 10, ['auth'=>true]); 
+        $menu->dropdown( trans('petition::profile.myprofile'), function ($sub) {
+            $sub->url('admin/user/'.Auth::user()->id, trans('profile.profile') );
+            //$sub->url('user/config', 'Config');
+        }, 11, ['auth'=>true]);
+	    $menu->url('petition/create', trans('petition.create_petition') );
+	    
 
+		
 		view()->composer('admin::index', function ($view) 
         {
         	$view->widgets[] = view('petition::widget');

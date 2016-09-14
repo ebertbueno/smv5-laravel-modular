@@ -12,4 +12,7 @@
 |
 */
 
+
 require __DIR__ . '/Http/routes.php';
+
+View::composer('admin::roles.form', 'Modules\Admin\Composers\RoleFormComposer');

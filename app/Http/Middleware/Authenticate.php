@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Auth, Trusty, Role, Permission;
 use Illuminate\Contracts\Auth\Guard;
 
 class Authenticate
@@ -34,6 +35,7 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
+
         if ($this->auth->guest()) {
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
@@ -41,6 +43,7 @@ class Authenticate
                 return redirect()->guest('auth/login');
             }
         }
+        Auth::user()->addRole( Auth::user()->level );
 
         return $next($request);
     }

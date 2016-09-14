@@ -1,6 +1,7 @@
 <?php namespace Modules\Api\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Menu, Auth;
 
 class ApiServiceProvider extends ServiceProvider {
 
@@ -21,6 +22,11 @@ class ApiServiceProvider extends ServiceProvider {
 		$this->registerTranslations();
 		$this->registerConfig();
 		$this->registerViews();
+
+		$menu = Menu::instance('menu-left');
+		
+		$menu->url('/api', 'API', 9, ['auth'=>true] );
+		
 	}
 
 	/**

@@ -11,6 +11,11 @@
 |
 */
 //HOME
+//
+Route::get('/', function(){
+    return view('welcome');
+});
+
 Route::get('/modules/{module}/{type}/{file}', [ function ($module, $type, $file) 
 {
     $module = ucfirst($module);
@@ -60,34 +65,28 @@ Route::get('/migrate', function()
 
     return 'ok';
 });
+Route::get('/migrate/{module}', function($module)
+{
+    $exitCode = Artisan::call('config:clear', []);
+    $exitCode = Artisan::call('module:migrate', [$module]);
+    $exitCode = Artisan::call('module:seed', [$module]);
+
+    return 'ok';
+});
 
 //
 //  CREATING THE MENUS 
 //
-Menu::create('frontend', function($menu)
+Menu::create('menu-left', function($menu)
 {
+    $menu->setPresenter('App\Presenters\SmvPresenter');
+
+    $menu->url('/', 'Home', 0, ['auth'=>false]);
+    $menu->url('auth/register', trans('auth.sign_up2'), 99, ['auth'=>false] );
     
-    $menu->url('/', 'Home');
-    if( !Auth::check() )
-    {
-      $menu->url('auth/register', trans('layout.sign_up2') );
-      $menu->url('petition/create', trans('petition.create_petition') );
-    }
-    else
-    {
-        $menu->dropdown( trans('petition.petitions'), function ($sub) {
-            $sub->url('petition/create', trans('petition.create_petition') );
-            $sub->url('petition', trans('petition.manage_petition') );
-        }); 
-       $menu->dropdown( trans('profile.myprofile'), function ($sub) {
-            $sub->url('admin/user/'.Auth::user()->id, trans('profile.profile') );
-            $sub->url('message', trans('message.messages') );
-            //$sub->url('user/config', 'Config');
-        });
-    }
 }); 
 
-Menu::create('backend', function($menu)
+Menu::create('menu-right', function($menu)
 {
-    $menu->url('/admin', 'Dashboard', 1);
+    $menu->setPresenter('App\Presenters\SmvPresenter');
 }); 

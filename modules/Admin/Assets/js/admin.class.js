@@ -46,23 +46,30 @@ angular.module('app', ['datatables'])
 			//show modal form
 			$scope.toggle = function(modalstate, id) 
 			{
-					$scope.modalstate = modalstate;
-				  $scope.form.id = id;
-					delete $scope.error;delete $scope.status;
-					$scope.form = angular.copy(form);
+				$scope.modalstate = modalstate;
+			  	$scope.form.id = id;
+				delete $scope.error;delete $scope.status;
+				$scope.form = angular.copy(form);
 
-					if(modalstate == 'edit')
-					{
-							$http.get( API_URL+'/admin/users/' + id)
-													.success(function(response) {
-																console.log($scope.form);
-															  $scope.form = response;
-													});
-					}
+				if(modalstate == 'edit')
+				{
+					$http.get( API_URL+'/admin/users/' + id)
+						.success(function(response) {
+								  $scope.form = response;
+						});
+				}
+				if(modalstate == 'delete')
+				{
+					$('#deleteModal').modal('show');
+				}
+				else
+				{
 					$('#myModal').modal('show');
+				}
 			}
 
-			$scope.save = function(modalstate, id, token) {
+			$scope.save = function(modalstate, id, token) 
+			{
 					var url = API_URL + "/admin/users";
 					$scope.form._token = token;
 					$scope.form._method = "POST";
@@ -90,19 +97,18 @@ angular.module('app', ['datatables'])
 					});
 			}
 
-			$scope.delete = function( id ){
-					if( confirm('Are you sure?') )
-					{
-							$http({
-								method:'DELETE',
-								url: API_URL + '/admin/users/'+ id
-							}).success(function(response){
-								$scope.status = {type:'success', 'message':response.message};
-								$scope.reload();
-							}).error(function(response){
-								alert(response.message);
-							});
-					}
+			$scope.delete = function( id )
+			{
+				$http({
+					method:'DELETE',
+					url: API_URL + '/admin/users/'+ id
+				}).success(function(response){
+					$scope.status = {type:'success', 'message':response.message};
+					$('#deleteModal').modal('hide');
+					$scope.reload();
+				}).error(function(response){
+					alert(response.message);
+				});
 			}
 	
 	});

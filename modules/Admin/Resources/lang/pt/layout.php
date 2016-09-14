@@ -18,6 +18,10 @@ return [
     'edit' => 'Editar',
     'back' => 'Voltar',
     'readmore' => 'Saiba mais',
+
+    'roles' => 'Grupos de usuários',
+    'permissions' => 'Permissões',
+    'modules' => 'Módulos',
   
     'find_yours' => 'Encontre sua causa',
     'recents' => 'Mais recentes ',

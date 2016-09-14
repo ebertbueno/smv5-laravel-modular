@@ -1,5 +1,24 @@
 https://github.com/stevebauman/eloquent-table
 https://sky.pingpong-labs.com/docs/2.1/modules
+	PING PONG MENUS:
+		- MENU PRESENTER: APP/PRESENTERS/SMVPRESENTER
+			DEFAULT MENUS:
+				menu-left
+				menu-right
+
+			GET INSTANCE:
+				$menu = Menu::instance('menu-left');
+		
+			SET AUTHENTICATED MENUS:
+				['AUTH'=>TRUE] ON MENU ATTRIBUTES
+	PING PONG TRUSTY:
+		- MODULE ROLES AND PERMISSIONS USAGE:
+			ROLES:
+				ADD  $this->middleware("roles:role1,role2,.."); ON CONTROLLER CONSTRUCT OR USE ['ONLY'=>'method'] TO FILTER
+
+			PERMISSIONS:
+				ADD  $this->middleware("permissions:perm1,perm2,..."); ON CONTROLLER CONSTRUCT OR USE METHOD FILTER
+
 https://github.com/adamwathan/bootforms
 https://github.com/yajra/laravel-datatables
 https://github.com/lucadegasperi/oauth2-server-laravel

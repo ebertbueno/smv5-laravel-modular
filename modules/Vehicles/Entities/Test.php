@@ -1,0 +1,9 @@
+<?php namespace Modules\Vehicles\Entities;
+   
+use Illuminate\Database\Eloquent\Model;
+
+class Test extends Model {
+
+    protected $fillable = [];
+
+}

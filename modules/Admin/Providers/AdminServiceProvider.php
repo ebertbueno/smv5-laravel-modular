@@ -2,7 +2,7 @@
 
 
 use Illuminate\Support\ServiceProvider;
-use Menu, App;
+use Menu, App, Auth;
 
 class AdminServiceProvider extends ServiceProvider {
 
@@ -28,8 +28,24 @@ class AdminServiceProvider extends ServiceProvider {
         //
 		// CREATING THE MENU
 		//
-		$menu = Menu::instance('backend');
-		$menu->route('admin.users.index', trans('admin::profile.account'), 5 );
+		$menu = Menu::instance('menu-left');
+
+		$menu->url('/admin', 'Dashboard', 0, ['auth'=>true]);
+
+		$menu->dropdown( '<i class="glyphicon glyphicon-cog"></i>', function ($menu2) 
+		{
+			$menu2->route('admin.users.index', trans('admin::profile.account') )->order(1);
+			$menu2->route('admin.roles.index', trans('admin::layout.roles') )->order(2);
+			$menu2->route('admin.permissions.index', trans('admin::layout.permissions'))->order(3);
+			$menu2->route('admin.modules.index', trans('admin::layout.modules') )->order(4);
+			$menu2->divider()->order(5);
+			$menu2->url('admin/users/profile/edit', trans('admin::profile.myprofile') )->order(6);
+			$menu2->url('auth/logout', trans('admin::layout.logout'))->order(7);
+    	}, 99, ['auth'=>true] );
+	
+			 
+
+		
 
 		/*view()->composer('admin::index', function ($view) 
         {
@@ -47,8 +63,16 @@ class AdminServiceProvider extends ServiceProvider {
 	{		
 		//
 		$this->app->bind(
-			'Modules\Admin\Repositories\UserRepository',
-			'Modules\Admin\Repositories\UserRepositoryEloquent'
+			'Modules\Admin\Repositories\User\UserRepository',
+			'Modules\Admin\Repositories\User\UserRepositoryEloquent'
+		);
+		$this->app->bind(
+			'Modules\Admin\Repositories\Roles\RoleRepository',
+			'Modules\Admin\Repositories\Roles\EloquentRoleRepository'
+		);
+		$this->app->bind(
+			'Modules\Admin\Repositories\Permissions\PermissionRepository',
+			'Modules\Admin\Repositories\Permissions\EloquentPermissionRepository'
 		);
 	}
 

@@ -33,6 +33,8 @@ class Kernel extends HttpKernel
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'api' => \App\Http\Middleware\ApiMiddleware::class,
+        'roles' => \App\Http\Middleware\RolesMiddleware::class,
+        'permissions' => \App\Http\Middleware\PermissionsMiddleware::class,
         
         'oauth' => \LucaDegasperi\OAuth2Server\Middleware\OAuthMiddleware::class,
         'oauth-user' => \LucaDegasperi\OAuth2Server\Middleware\OAuthUserOwnerMiddleware::class,

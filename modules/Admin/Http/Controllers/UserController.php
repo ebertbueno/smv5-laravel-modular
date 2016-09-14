@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Modules\Admin\Entities\Account;
-use Modules\Admin\Repositories\UserRepository;
+use Modules\Admin\Repositories\User\UserRepository;
 use Auth, Validator, Input, Hash;
 use Yajra\Datatables\Datatables;
 
@@ -16,9 +16,12 @@ class UserController extends Controller
 
     public function __construct(UserRepository $user)
     {
+        $this->middleware('roles:admin', ['except'=>['update','edit']]);
+        $this->middleware('permissions:manage_users', ['except'=>['update','edit']]);
+
         $this->user = $user;
-				$this->levels = [1=>'Admin', 2=>'Visitor'];
-				$this->langs = ['en'=>'English', 'pt'=>'Português'];
+		$this->levels = [1=>'Admin', 2=>'Visitor'];
+		$this->langs = ['en'=>'English', 'pt'=>'Português'];
     }
     /**
      * Display a listing of the resource.
@@ -47,7 +50,7 @@ class UserController extends Controller
 								})
                 ->addColumn('action', function ($user) {
                     return '<button class="btn btn-link" ng-click="toggle(\'edit\', '.$user->id.')">Edit</button>
-                            <button class="btn btn-link" ng-click="delete('.$user->id.')" > Delete</button>';
+                            <button class="btn btn-link" ng-click="toggle(\'delete\', '.$user->id.')" > Delete</button>';
                 })
                 ->make();
         }
@@ -95,9 +98,29 @@ class UserController extends Controller
     public function show($id)
     {
         //
-				$user = $this->user->find($id);
+		$user = $this->user->find($id);
 			
         return response()->json( $user );
+    }
+
+
+    /**
+     * Show the form for editing the specified role.
+     *
+     * @param int $id
+     *
+     * @return Response
+     */
+    public function edit(Request $request, $id)
+    {
+        if( $request->ajax() )
+        {
+             $id = Auth::user()->id;
+             return response()->json( $this->user->find($id, ['id', 'name', 'last_name', 'email', 'language']) );
+        }
+       
+
+        return View('admin::user.profile');
     }
 
     /**
@@ -110,31 +133,36 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         //
-				$input = $request->except(['_method', '_token']);
+        if( !Auth::user()->is('Admin') )
+        {
+            $id = Auth::user()->id;
+        }
+
+		$input = $request->except(['_method', '_token']);
 
 
-				$validation = Validator::make($input,  [
-								'name' => 'required',
-                'email' => 'required|email|max:255|unique:users,email,'.$id,
-								'password' => 'confirmed'
-					]);
+		$validation = Validator::make($input,  [
+						'name' => 'required',
+                        'email' => 'required|email|max:255|unique:users,email,'.$id,
+						'password' => 'confirmed'
+			]);
 
-				if( $validation->passes() )
-				{
-						unset( $input['password_confirmation'] );
+		if( $validation->passes() )
+		{
+				unset( $input['password_confirmation'] );
 
-						if( empty($input['password']) ) 
-								unset($input['password']);
-						else
-								$input['password'] = Hash::make($input['password']);
+				if( empty($input['password']) ) 
+						unset($input['password']);
+				else
+						$input['password'] = Hash::make($input['password']);
 
-						$this->user->update( $input, $id );
+				$this->user->update( $input, $id );
 
-						if ($request->ajax())
-								return response()->json( ['message'=>trans('admin::layout.alert_success')]);
+				if ($request->ajax())
+						return response()->json( ['message'=>trans('admin::layout.alert_success')]);
 
-						return redirect('admin/user/'.$id);  
-				}
+				return redirect('admin/user/'.$id);  
+		}
 
         if ($request->ajax())
                 return response()->json( ['message'=>trans('admin::layout.alert_error'),'error'=>$validation->getMessageBag()->toArray()], 412 );
