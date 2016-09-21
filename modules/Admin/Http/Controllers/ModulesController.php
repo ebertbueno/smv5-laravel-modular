@@ -11,6 +11,11 @@ use Redirect;
 class ModulesController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware("roles:admin");
+        $this->middleware("permissions:manage-modules");
+    }
     /**
      * Display a listing of categories.
      *

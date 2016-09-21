@@ -17,7 +17,7 @@ class UserController extends Controller
     public function __construct(UserRepository $user)
     {
         $this->middleware('roles:admin', ['except'=>['update','edit']]);
-        $this->middleware('permissions:manage_users', ['except'=>['update','edit']]);
+        $this->middleware('permissions:manage-users', ['except'=>['update','edit']]);
 
         $this->user = $user;
 		$this->levels = [1=>'Admin', 2=>'Visitor'];

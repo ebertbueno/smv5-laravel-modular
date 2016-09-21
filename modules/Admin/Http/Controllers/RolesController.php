@@ -19,9 +19,9 @@ class RolesController extends Controller
 
     public function __construct(RoleRepository $repository)
     {
-        $this->middleware("roles:Admin");
+        $this->middleware("roles:admin");
 
-        $this->middleware("permissions:manage_roles", ['only'=>['create','edit'] ]);
+        $this->middleware("permissions:manage-roles");
 
         $this->repository = $repository;
     }
