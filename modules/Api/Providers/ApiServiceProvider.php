@@ -25,7 +25,7 @@ class ApiServiceProvider extends ServiceProvider {
 
 		$menu = Menu::instance('menu-left');
 		
-		$menu->url('/api', 'API', 9, ['auth'=>true] );
+		$menu->url('admin/manage-api', 'API', 9, ['auth'=>true] );
 		
 	}
 

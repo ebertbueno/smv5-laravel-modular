@@ -25,3 +25,8 @@ Route::group(['middleware'=>'cors'], function()
 
 	});
 });
+
+Route::group(['prefix' => 'admin', 'namespace' => 'Modules\Api\Http\Controllers', 'middleware'=>'auth'], function()
+{
+	Route::resource('manage-api', 'ApiController' );
+});
