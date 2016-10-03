@@ -34,14 +34,14 @@ class AdminServiceProvider extends ServiceProvider {
 
 		$menu->dropdown( '<i class="glyphicon glyphicon-cog"></i>', function ($menu2) 
 		{
-			$menu2->route('admin.users.index', trans('admin::profile.account') )->order(1);
-			$menu2->route('admin.roles.index', trans('admin::layout.roles') )->order(2);
-			$menu2->route('admin.permissions.index', trans('admin::layout.permissions'))->order(3);
-			$menu2->route('admin.modules.index', trans('admin::layout.modules') )->order(4);
+			$menu2->route('admin.users.index', trans('admin::profile.account'), [], ['perm'=>'manage-users', 'role'=>'visitor'] )->order(1);
+			$menu2->route('admin.roles.index', trans('admin::layout.roles'), [], ['perm'=>'manage-roles'] )->order(2);
+			$menu2->route('admin.permissions.index', trans('admin::layout.permissions'), [], ['perm'=>'manage-permissions'])->order(3);
+			$menu2->route('admin.modules.index', trans('admin::layout.modules'), [], ['perm'=>'manage-modules'] )->order(4);
 			$menu2->divider()->order(5);
 			$menu2->url('admin/users/profile/edit', trans('admin::profile.myprofile') )->order(6);
 			$menu2->url('auth/logout', trans('admin::layout.logout'))->order(7);
-    	}, 99, ['auth'=>true] );
+    	}, 99, ['auth'=>true, 'role'=>'admin'] );
 	
 			 
 

@@ -3,10 +3,36 @@
 namespace App\Presenters;
 
 use Pingpong\Menus\Presenters\Presenter;
-use Auth;
+use Auth, Role, Permission;
 
 class SmvPresenter extends Presenter
 {
+    public $role, $user;
+
+    public function __construct()
+    {
+        if( Auth::check() )
+        {
+            $this->user = Auth::user();
+        }
+    }
+
+    public function checkAuth($item)
+    {
+        //dd($this->role);
+        return ( !isset($item->attributes['auth']) || @$item->attributes['auth'] === Auth::check() )? true:false;
+    }
+
+    public function checkPerm($item)
+    {
+        if( !isset($item->attributes['role']) || $this->user->is(@$item->attributes['role']) )
+        {
+            return ( !isset($item->attributes['perm']) || $this->user->can(@$item->attributes['perm']) )? true:false;
+        }else{
+            return false;
+        }
+    }
+
     /**
      * {@inheritdoc }.
      */
@@ -28,9 +54,9 @@ class SmvPresenter extends Presenter
      */
     public function getMenuWithoutDropdownWrapper($item)
     {
-        if( !isset($item->attributes['auth']) || @$item->attributes['auth'] === Auth::check() )
+        if( $this->checkAuth($item) && $this->checkPerm($item)  )
         {
-            unset($item->attributes['auth']);
+            unset($item->attributes['auth'], $item->attributes['role'], $item->attributes['perm']);
             return '<li'.$this->getActiveState($item).'><a href="'.$item->getUrl().'" '.$item->getAttributes().'>'.$item->getIcon().' '.$item->title.'</a></li>'.PHP_EOL;
         }
         else
@@ -82,7 +108,7 @@ class SmvPresenter extends Presenter
      */
     public function getMenuWithDropDownWrapper($item)
     {
-        if( !isset($item->attributes['auth']) || @$item->attributes['auth'] === Auth::check() )
+        if( $this->checkAuth($item) && $this->checkPerm($item) )
         {
             unset($item->attributes['auth']);
             return '<li class="dropdown'.$this->getActiveStateOnChild($item, ' active').'">
@@ -112,7 +138,7 @@ class SmvPresenter extends Presenter
      */
     public function getMultiLevelDropdownWrapper($item)
     {
-        if( !isset($item->attributes['auth']) || @$item->attributes['auth'] === Auth::check() )
+         if( $this->checkAuth($item) )
         {
             unset($item->attributes['auth']);
             return '<li class="dropdown'.$this->getActiveStateOnChild($item, ' active').'">

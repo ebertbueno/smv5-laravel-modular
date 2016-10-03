@@ -43,7 +43,6 @@ class Authenticate
                 return redirect()->guest('auth/login');
             }
         }
-        Auth::user()->addRole( Auth::user()->level );
 
         return $next($request);
     }
