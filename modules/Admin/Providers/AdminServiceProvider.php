@@ -34,7 +34,7 @@ class AdminServiceProvider extends ServiceProvider {
 
 		$menu->dropdown( '<i class="glyphicon glyphicon-cog"></i>', function ($menu2) 
 		{
-			$menu2->route('admin.users.index', trans('admin::profile.account'), [], ['perm'=>'manage-users', 'role'=>'visitor'] )->order(1);
+			$menu2->route('admin.users.index', trans('admin::profile.account'), [], ['perm'=>'manage-users', 'role'=>'admin'] )->order(1);
 			$menu2->route('admin.roles.index', trans('admin::layout.roles'), [], ['perm'=>'manage-roles'] )->order(2);
 			$menu2->route('admin.permissions.index', trans('admin::layout.permissions'), [], ['perm'=>'manage-permissions'])->order(3);
 			$menu2->route('admin.modules.index', trans('admin::layout.modules'), [], ['perm'=>'manage-modules'] )->order(4);
