@@ -13,9 +13,9 @@
 				padding-top: 70px;	
 			}
 		</style>
-        <link href="{{ asset('bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+        <link href="{{ asset('bower_components/bootstrap/dist/css/bootstrap.css') }}" rel="stylesheet">
         <!-- Font Awesome CSS -->
-        <link href="{{ asset('fonts/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+        <link href="{{ asset('bower_components/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
         
         @yield('css')
 
@@ -82,11 +82,11 @@
 
         <!--  SCRIPTS  -->
         <!-- Jquery and Bootstap core js files -->
-        <script type="text/javascript" src="{{ asset('plugins/jquery.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/system.class.js') }}"></script>
         <!-- Modernizr javascript -->
-        <script type="text/javascript" src="{{ asset('plugins/modernizr.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bower_components/modernizr/src/modernizr.js') }}"></script>
         @yield('js')
         <script type="text/javascript" src="{{ asset('themes/exemplo/js/functions.js') }}"></script>
 

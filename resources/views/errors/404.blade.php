@@ -6,7 +6,7 @@
 			<div class="section clearfix">
 				<div class="container">
 	
-					<h2 class="text-center">{{ trans('error.'.$code) }}</h2>
+					<h2 class="text-center">404</h2>
 
 				</div>
 			</div>
