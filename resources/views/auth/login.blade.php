@@ -46,7 +46,7 @@
 								</div>
 								<div class="col-sm-8">
 									<ul>
-										<li><a href="#">{{ trans('auth.forgot_pass') }}</a></li>
+										<li><a href="{{ url('password/email') }}">{{ trans('auth.forgot_pass') }}</a></li>
 									</ul>
 								</div>
 								<button type="submit" class="btn btn-group btn-default btn-sm ">{{ trans('auth.login') }}</button>

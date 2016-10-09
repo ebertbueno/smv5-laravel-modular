@@ -15,6 +15,9 @@
 Route::get('/', function(){
     return view('welcome');
 });
+Route::get('/home', function(){
+    return view('welcome');
+});
 
 Route::get('/modules/{module}/{type}/{file}', [ function ($module, $type, $file) 
 {
