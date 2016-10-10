@@ -1,4 +1,4 @@
-/modules/*
+modules/
 /vendor
 /node_modules
 Homestead.yaml
