@@ -39,12 +39,18 @@ Route::get('/themes/{theme}/{type}/{file}', [ function ($theme, $type, $file)
 //AUTHENTICATIONS & REGISTER
 Route::get('auth/facebook', 'Auth\AuthController@facebook');
 Route::get('auth/facebook/page', 'Auth\AuthController@pageFacebook');
+
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
+
 // Registration routes...
-Route::post('auth/register',  ['as'=>'auth.register', 'uses'=>'Auth\AuthController@registerForm']);
-Route::get('auth/register', 'Auth\AuthController@getRegister');
+
+if( Config::get('menus.register') )
+{
+    Route::post('auth/register',  ['as'=>'auth.register', 'uses'=>'Auth\AuthController@registerForm']);
+    Route::get('auth/register', 'Auth\AuthController@getRegister');
+}
 // Password reset link request routes...
 Route::get('password/email', 'Auth\PasswordController@getEmail');
 Route::post('password/email', 'Auth\PasswordController@postEmail');
@@ -85,11 +91,11 @@ Menu::create('menu-left', function($menu)
     $menu->setPresenter('App\Presenters\SmvPresenter');
 
     $menu->url('/', 'Home', 0, ['auth'=>false]);
-    $menu->url('auth/register', trans('auth.sign_up2'), 99, ['auth'=>false] );
-    
 }); 
 
 Menu::create('menu-right', function($menu)
 {
     $menu->setPresenter('App\Presenters\SmvPresenter');
+    if( Config::get('menus.register') ) $menu->url('auth/register', trans('auth.sign_up2'), 97, ['auth'=>false] );
+    if( Config::get('menus.login') ) $menu->url('auth/login', trans('auth.sign_in'), 98, ['auth'=>false] );
 }); 

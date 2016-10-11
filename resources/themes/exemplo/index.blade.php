@@ -15,7 +15,6 @@
 		</style>
         <link href="{{ asset('bower_components/bootstrap/dist/css/bootstrap.css') }}" rel="stylesheet">
         <!-- Font Awesome CSS -->
-        <link href="{{ asset('bower_components/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
         
         @yield('css')
 
@@ -39,13 +38,16 @@
               <ul class="nav navbar-nav">
                 {!! Menu::render('menu-left') !!}
               </ul>
-              <form class="navbar-form navbar-right">
+              <form class="navbar-form navbar-right" action="">
                 <div class="form-group">
                   <input type="text" class="form-control" placeholder="Search">
                 </div>
                 <button type="submit" class="btn btn-default">Submit</button>
               </form>
               <ul class="nav navbar-nav navbar-right">
+                @if( Auth::check() ) 
+                    <li><a href="{{ url('auth/logout') }}"><small>{{ trans('auth.logged_with') }}</small> {{ Auth::user()->name }} <small>(Logout)</small></a></li> 
+                @endif
                 {!! Menu::render('menu-right') !!}
               </ul>
             </div><!-- /.navbar-collapse -->
@@ -85,8 +87,6 @@
         <script type="text/javascript" src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/system.class.js') }}"></script>
-        <!-- Modernizr javascript -->
-        <script type="text/javascript" src="{{ asset('bower_components/modernizr/src/modernizr.js') }}"></script>
         @yield('js')
         <script type="text/javascript" src="{{ asset('themes/exemplo/js/functions.js') }}"></script>
 

@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Laravel</title>
+@extends( Config::get('themes.frontend') )
 
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-
-        <style>
+@section('css')
+         <style>
             html, body {
                 height: 100%;
             }
@@ -16,7 +12,6 @@
                 width: 100%;
                 display: table;
                 font-weight: 100;
-                font-family: 'Lato';
             }
 
             .container {
@@ -32,10 +27,12 @@
 
             .title {
                 font-size: 96px;
+                color: #ccc;
             }
         </style>
-    </head>
-    <body>
+@endsection
+
+@section('content')
        
         <div class="container">
             <div class="content">
@@ -43,5 +40,5 @@
                
             </div>
         </div>
-    </body>
-</html>
+
+@endsection

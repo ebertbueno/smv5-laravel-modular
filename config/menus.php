@@ -13,4 +13,7 @@ return array(
 
     'ordering' => true,
 
+    'register' => true,
+    'login'    => true
+
 );

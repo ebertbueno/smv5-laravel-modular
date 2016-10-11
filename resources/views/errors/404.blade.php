@@ -7,6 +7,7 @@
 				<div class="container">
 	
 					<h2 class="text-center">404</h2>
+					<h4 class="text-center">Maybe the system don't have this functionality yet!</h4>
 
 				</div>
 			</div>

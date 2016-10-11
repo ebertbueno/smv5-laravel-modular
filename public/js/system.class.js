@@ -1,13 +1,5 @@
 $(document).ready(function()
 {
-    $('#myModal').on('show.bs.modal', function (e) 
-    {
-        var button = $(e.relatedTarget);
-
-        $('.modal-content').load( button.attr('href'),function(){
-            $system.parseForm();
-        });
-    });
 
 });
 

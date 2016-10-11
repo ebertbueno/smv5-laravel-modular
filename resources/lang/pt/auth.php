@@ -25,6 +25,7 @@ return [
     'login' => 'Entrar ',
     'login_with' => 'Entrar com',
     'sign_up' => 'Registrar ',
+    'sign_up_with' => 'Registrar com',
     'sign_up2' => 'Registre-se',
     'sign_in' => 'Acessar',
     'logout' => 'Sair',
@@ -36,6 +37,8 @@ return [
     'edit' => 'Editar',
     'back' => 'Voltar',
     'readmore' => 'Saiba mais',
+
+    'and' => 'e',
 
     'setting' => 'Configuração',
     'profile' => 'Perfil',

@@ -1,6 +1,7 @@
-modules/
 /vendor
 /node_modules
+modules/
+resources/themes/
 Homestead.yaml
 Homestead.json
 .env

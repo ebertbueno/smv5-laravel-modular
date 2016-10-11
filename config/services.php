@@ -36,9 +36,9 @@ return [
     ],
 
     'facebook' => [
-        'client_id' => '850857928366026',
-        'client_secret' => '4d90291ee225cf9fec8d49abc8d8381e',
-        'redirect' => 'http://laravel.mantovaniarts.com/auth/facebook/page',
+        'client_id' => env('FACEBOOK_ID'),
+        'client_secret' => env('FACEBOOK_SECRET'),
+        'redirect' => env('FACEBOOK_REDIRECT'),
     ],
 
 ];
